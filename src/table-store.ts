@@ -1,24 +1,23 @@
 import { Table } from './interfaces/Table';
-import { TableData } from './interfaces/TableData';
-import { MappedTableData } from './interfaces/MappedTableData';
+import { TableRow } from './interfaces/TableRow';
+import { Store } from './store'
 
 import * as Linq from 'linq';
 
-export class TableStore {
-    tableData: MappedTableData = {};
+const SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/y);
 
-    private tables = new Set<string>();
+export class TableStore extends Store<Table> {
 
-    constructor() { }
+    constructor() { super(); }
 
     /**
-     * Add table data.
-     * @param tableData Collection of table data.
+     * Add a table to the table store.
+     * @param table Table to add.
      */
-    addTableData(tableData: TableData) {
-        for (let table of tableData.tables) {
-            this.add(table);
-        }
+    add(table: Table): boolean {
+        if (!super.add(table)) { return false; }
+        this.processTable(table);
+        return true;
     }
 
     /**
@@ -29,10 +28,20 @@ export class TableStore {
      * </ul>
      * @param table The table to be processed.
      */
-    private processTable(table: Table) {
-        if (!table.data) return;
+    processTable(table: Table): boolean {
+        if (!table.data) return false;
 
-        // Calculate total table weight
+        // Calculate weighted index values
+        this.calculateWeightedIndexValues(table);
+
+        // Calculate substitution plans
+
+
+        return true;
+    }
+
+    calculateWeightedIndexValues(table: Table): Table {
+        // Calculate table weight
         let totalWeight:number = 0;
         Linq.from(table.data).forEach(i=>totalWeight += i.weight);
         
@@ -45,34 +54,21 @@ export class TableStore {
         // Fix for cumulative floating point math errors
         // (the last weighted Index will almost never be equal to 1).
         table.data[table.data.length - 1].weightedIndex = 1;
+        return table;
     }
 
-    /**
-     * Add a table.
-     * @param table Table data.
-     */
-    add(table: Table) {
-        this.tableData[table.name] = table;
-        this.tables.add(table.name);
-    }
+    calculateRowSubstitutions(table: Table): Table {
+        if (!table.substitutions || !table.data) return table;
 
-    /**
-     * Checks if this TableStore has a table with a given name.
-     * @param name Table name.
-     */
-    has(name: string): boolean {
-        return this.tables.has(name);
-    }
-
-    /**
-     * Remove a table from this TableStore.
-     * @param name Table name.
-     */
-    remove(name: string): boolean {
-        if (this.has(name)) {
-            this.tables.delete(name);
-            return delete(this.tableData[name]);
+        let search = [];
+        for (let idx in table.data) {
+            let row = table.data[idx] as TableRow;
+            row.substitutions = [];
+            while((search = SubstituteRe_Search.exec(row.value)) != null) {
+                row.substitutions.push(search.groups.name);
+            }
         }
-        return false;
+
+        return table;
     }
 }
