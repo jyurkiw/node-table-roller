@@ -1,5 +1,6 @@
+import { TableReference } from './interfaces/TableReference';
 import { Table } from './interfaces/Table';
-import { TableRow } from './interfaces/TableRow';
+import { TableRow, DeepCopyTableRow } from './interfaces/TableRow';
 import { Store } from './store'
 
 import * as Linq from 'linq';
@@ -7,11 +8,11 @@ import * as Linq from 'linq';
 const SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/y);
 
 export class TableStore extends Store<Table> {
-
     constructor() { super(); }
 
     /**
      * Add a table to the table store.
+     * Reference tables must be added after the tables they reference.
      * @param table Table to add.
      */
     add(table: Table): boolean {
@@ -21,7 +22,8 @@ export class TableStore extends Store<Table> {
     }
 
     /**
-     * Process a table to fill in calculated values.
+     * Process tables to fill in calculated values.
+     * Should be called after all tables have been added.
      * Calculated Values:
      * <ul>
      *  <li>Weighted Index values.</li>
@@ -29,17 +31,55 @@ export class TableStore extends Store<Table> {
      * @param table The table to be processed.
      */
     processTable(table: Table): boolean {
-        if (!table.data) return false;
+        // Calculate table references
+        this.calculateTableReferences(table);
 
         // Calculate weighted index values
         this.calculateWeightedIndexValues(table);
 
-        // Calculate substitution plans
-
+        // Calculate row substitutions
+        this.calculateRowSubstitutions(table);
 
         return true;
     }
 
+    /**
+     * Recursively handle table references.
+     *   Copy referenced table data to the passed table according
+     * to the reference min and max.
+     *   All table rows are deep copies so that weightedIndices can
+     * be calculated without changing the indices of the referenced
+     * table.
+     *   If the referenced table is also a reference, recursively
+     * handle the reference table.
+     *   Delete the passed table's reference object so that it won't
+     * be handled again.
+     * @param table The table to calculate references for.
+     */
+    calculateTableReferences(table: Table): Table {
+        if (!table.reference) { return; }
+
+        let referenceTarget: Table = super.get(table.reference.table);
+        if (referenceTarget.reference) {
+            this.calculateTableReferences(referenceTarget);
+        }
+
+        table.data = [];
+        let rows: TableRow[] = referenceTarget.data;
+        rows = rows.slice(table.reference.min, table.reference.max + 1);
+        for (let row of rows) {
+            table.data.push(DeepCopyTableRow(row));
+        }
+        delete(table.reference);
+        return table;
+    }
+
+    /**
+     * Calculate weighted index values.
+     *   A weighted index value is the weight of the row divided
+     * by the table's total weight.
+     * @param table The table to calculate.
+     */
     calculateWeightedIndexValues(table: Table): Table {
         // Calculate table weight
         let totalWeight:number = 0;
@@ -57,6 +97,14 @@ export class TableStore extends Store<Table> {
         return table;
     }
 
+    /**
+     * Calculate row substitutions.
+     *   Substitutions are a list of table names from the value of the row.
+     *   A substitution is delimited in a value string by curley braces {}.
+     * The braces contain the table name. The string array contains
+     * substitutions in order.
+     * @param table The table to calculate.
+     */
     calculateRowSubstitutions(table: Table): Table {
         if (!table.substitutions || !table.data) return table;
 
@@ -68,7 +116,6 @@ export class TableStore extends Store<Table> {
                 row.substitutions.push(search.groups.name);
             }
         }
-
         return table;
     }
 }

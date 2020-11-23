@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.TableStore = void 0;
+var TableRow_1 = require("./interfaces/TableRow");
 var store_1 = require("./store");
 var Linq = require("linq");
 var SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/y);
@@ -30,10 +31,28 @@ var TableStore = (function (_super) {
         return true;
     };
     TableStore.prototype.processTable = function (table) {
-        if (!table.data)
-            return false;
+        this.calculateTableReferences(table);
         this.calculateWeightedIndexValues(table);
+        this.calculateRowSubstitutions(table);
         return true;
+    };
+    TableStore.prototype.calculateTableReferences = function (table) {
+        if (!table.reference) {
+            return;
+        }
+        var referenceTarget = _super.prototype.get.call(this, table.reference.table);
+        if (referenceTarget.reference) {
+            this.calculateTableReferences(referenceTarget);
+        }
+        table.data = [];
+        var rows = referenceTarget.data;
+        rows = rows.slice(table.reference.min, table.reference.max + 1);
+        for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
+            var row = rows_1[_i];
+            table.data.push(TableRow_1.DeepCopyTableRow(row));
+        }
+        delete (table.reference);
+        return table;
     };
     TableStore.prototype.calculateWeightedIndexValues = function (table) {
         var totalWeight = 0;

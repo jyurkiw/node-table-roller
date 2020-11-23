@@ -1,1 +1,1 @@
-{"version":3,"file":"TableReference.js","sourceRoot":"","sources":["TableReference.ts"],"names":[],"mappings":""}
+{"version":3,"file":"TableReference.js","sourceRoot":"","sources":["TableReference.ts"],"names":[],"mappings":";;;AAUA,SAAgB,sBAAsB,CAAC,SAAyB;IAE5D,OAAO;QACH,KAAK,EAAE,SAAS,CAAC,KAAK;QACtB,GAAG,EAAE,SAAS,CAAC,GAAG;QAClB,GAAG,EAAE,SAAS,CAAC,GAAG;KACrB,CAAA;AACL,CAAC;AAPD,wDAOC"}

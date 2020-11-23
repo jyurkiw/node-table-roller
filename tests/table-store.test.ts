@@ -1,4 +1,4 @@
-import { Table } from '../src/interfaces/Table';
+import { Table, DeepCopyTable } from '../src/interfaces/Table';
 import { TableStore } from '../src/table-store';
 
 import { suite, test } from "@testdeck/mocha";
@@ -18,6 +18,85 @@ let exTable: Table = {
         {'value': 'ex-', weight: 1}
     ]
 };
+let weightingTable: Table = {
+    'name': 'weighting test table',
+    'data': [
+        {'value': 'a', weight: 1},
+        {'value': 'b', weight: 1},
+        {'value': 'c', weight: 1},
+        {'value': 'd', weight: 1}
+    ]
+};
+let redirTableA: Table = {
+    'name': 'redirectionA',
+    'reference': {
+        'table': 'redirection_target',
+        'min': 1,
+        'max': 2
+    }
+};
+let redirTableB: Table = {
+    'name': 'redirectionB',
+    'reference': {
+        'table': 'redirection_target',
+        'min': 1,
+        'max': 1
+    }
+};
+let redirTableC: Table = {
+    'name': 'redirectionC',
+    'reference': {
+        'table': 'redirection_target',
+        'min': 0,
+        'max': 3
+    }
+};
+let redirTableZ: Table = {
+    'name': 'double redirection',
+    'reference': {
+        'table': 'redirectionC',
+        'min': 1,
+        'max': 2
+    }
+}
+let redirTargetTable: Table = {
+    'name': 'redirection_target',
+    'data': [
+        { 'value': 'a', 'weight': 1, 'weightedIndex': 0.25 },
+        { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
+        { 'value': 'c', 'weight': 1, 'weightedIndex': 0.75 },
+        { 'value': 'd', 'weight': 1, 'weightedIndex': 1 }
+    ]
+};
+let redirExpected_1_1: Table = {
+    'name': 'redirectionB',
+    'data': [
+        { 'value': 'b', 'weight': 1, 'weightedIndex': 1 }
+    ]
+};
+let redirExpected_1_2: Table = {
+    'name': 'redirectionA',
+    'data': [
+        { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
+        { 'value': 'c', 'weight': 1, 'weightedIndex': 1 }
+    ]
+};
+let redirExpected_0_3: Table = {
+    'name': 'redirectionC',
+    'data': [
+        { 'value': 'a', 'weight': 1, 'weightedIndex': 0.25 },
+        { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
+        { 'value': 'c', 'weight': 1, 'weightedIndex': 0.75 },
+        { 'value': 'd', 'weight': 1, 'weightedIndex': 1 }
+    ]
+};
+let redirExpected_double: Table = {
+    'name': 'double redirection',
+    'data': [
+        { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
+        { 'value': 'c', 'weight': 1, 'weightedIndex': 1 }
+    ]
+};
 let noDatTable: Table = { name: 'no data table' };
 let td: Table[] = [sideTable, exTable];
 let subT
@@ -28,6 +107,16 @@ class TestTableStore {
 
     before() {
         this.ts = new TableStore();
+    }
+
+    @test('Test calculate weighted index values: 4 rows')
+    testCalculateWeightedIndexValues_4rows() {
+        let testTable: Table = DeepCopyTable(weightingTable);
+        this.ts.calculateWeightedIndexValues(testTable);
+        expect(testTable.data[0].weightedIndex).to.equal(0.25);
+        expect(testTable.data[1].weightedIndex).to.equal(0.5);
+        expect(testTable.data[2].weightedIndex).to.equal(0.75);
+        expect(testTable.data[3].weightedIndex).to.equal(1);
     }
 
     @test('Test add overload')
@@ -43,9 +132,40 @@ class TestTableStore {
         expect(actual).to.be.false;
     }
 
-    @test('Test processTable: no table data failure')
-    testProcessTable_executionGuardSuccess() {
-        expect(this.ts.processTable(noDatTable)).to.be.false;
+    @test('Test get no redirection')
+    testGet_noRedirection() {
+        this.ts.add(sideTable);
+        expect(this.ts.get(sideTable.name)).to.be.deep.equal(sideTable);
+    }
+
+    @test('Test get with redirection 1 2')
+    testGet_redirection_1_2() {
+        this.ts.addm([redirTargetTable, redirTableA]);
+        expect(this.ts.get(redirTableA.name))
+            .to.be.deep.equal(redirExpected_1_2);
+    }
+
+    @test('Test get with redirection 1 1')
+    testGet_redirection_1_1() {
+        this.ts.addm([redirTargetTable, redirTableB]);
+        expect(this.ts.get(redirTableB.name))
+            .to.be.deep.equal(redirExpected_1_1);
+    }
+
+    @test('Test get with redirection 0 3')
+    testGet_redirection_0_3() {
+        this.ts.addm([redirTargetTable, redirTableC]);
+        expect(this.ts.get(redirTableC.name))
+            .to.be.deep.equal(redirExpected_0_3);
+    }
+
+    @test('Test get with multiple redirections')
+    testGet_multiRedirection() {
+        this.ts.addm([redirTargetTable, redirTableC, redirTableZ]);
+        expect(this.ts.get(redirTableC.name))
+            .to.be.deep.equal(redirExpected_0_3);
+        expect(this.ts.get(redirTableZ.name))
+            .to.be.deep.equal(redirExpected_double);
     }
 
     @test('Test processTable: table processes weighted indicies')
