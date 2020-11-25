@@ -155,6 +155,10 @@ export class Roller {
         return value;
     }
 
+    /**
+     * Collect values from referenced tables for substitution into the row value.
+     * @param row The TableRow to process.
+     */
     processTableRowValue(row: TableRow): string {
         if (!row.substitutions) return row.value;
 

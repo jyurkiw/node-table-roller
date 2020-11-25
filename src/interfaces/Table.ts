@@ -11,7 +11,7 @@ export interface Table extends NameMappable {
 }
 
 export function DeepCopyTable(table: Table): Table {
-    let t: Table = { name: table.name }
+    let t: Table = { name: table.name, version: table.version }
     if (table.data) { 
         t.data = Linq
             .from(table.data)
