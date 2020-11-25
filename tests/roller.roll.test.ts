@@ -48,7 +48,8 @@ class TestRoller_RollFunction {
 
     createTable(name: string, data?: TableRow[], substitutions?: boolean, reference?: TableReference): Table {
         let t: Table = {
-            name: name
+            name: name,
+            version: 1.0
         };
         if (data) t.data = data;
         if (substitutions) t.substitutions = substitutions;
@@ -61,6 +62,7 @@ class TestRoller_RollFunction {
     createPlan(name: string, rolls: TableRoll[]): void {
         this.roller.addRollPlan({
             name: name,
+            version: 1.0,
             rolls: rolls
         });
     }

@@ -4,60 +4,70 @@ import { Table } from '../src/interfaces/Table';
 export const roll_plans: RollPlan[] = [
     {
         'name': 'hit_location',
+        'version': 1.0,
         'rolls': [
             {'table': 'body_location', 'numRolls': 1}
         ]
     },
     {
         'name': 'side',
+        'version': 1.0,
         'rolls': [
             {'table': 'side', 'numRolls': 1}
         ]
     },
     {
         'name': 'relation',
+        'version': 1.0,
         'rolls': [
             {'table': 'relation', 'numRolls': 1}
         ]
     },
     {
         'name': 'friends, enemies, and lovers',
+        'version': 1.0,
         'rolls': [
             {'table': 'friends, enemies, and lovers', 'numRolls': 1}
         ]
     },
     {
         'name': 'siblings and cousins',
+        'version': 1.0,
         'rolls': [
             {'table': 'siblings and cousins', 'numRolls': 1}
         ]
     },
     {
         'name': 'children',
+        'version': 1.0,
         'rolls': [
             {'table': 'children', 'numRolls': 1}
         ]
     },
     {
         'name': 'inheritors',
+        'version': 1.0,
         'rolls': [
             {'table': 'inheritors', 'numRolls': 1}
         ]
     },
     {
         'name': 'parents',
+        'version': 1.0,
         'rolls': [
             {'table': 'parents', 'numRolls': 1}
         ]
     },
     {
         'name': 'grandparents',
+        'version': 1.0,
         'rolls': [
             {'table': 'grandparents', 'numRolls': 1}
         ]
     },
     {
         'name': 'complication_injury',
+        'version': 1.0,
         'rolls': [
             {'table': 'complication_injury', 'numRolls': 1}
         ]
@@ -67,6 +77,7 @@ export const roll_plans: RollPlan[] = [
 export const table_data: Table[] = [
     {
         'name': 'body_location',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             {'value': 'skull', 'weight': 1},
@@ -98,6 +109,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'side',
+        'version': 1.0,
         'data': [
             {'value': 'left', weight: 1},
             {'value': 'right', weight: 1}
@@ -105,6 +117,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'friends, enemies, and lovers',
+        'version': 1.0,
         'substitutions': true,
         'reference': {
             'table': 'relation',
@@ -114,6 +127,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'siblings and cousins',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 16,
@@ -122,6 +136,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'inheritors',
+        'version': 1.0,
         'substitutions': true,
         'reference': {
             'table': 'relation',
@@ -131,6 +146,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'children',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 19,
@@ -139,6 +155,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'parents',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 25,
@@ -147,6 +164,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'grandparents',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 29,
@@ -155,6 +173,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'relation',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             {'value': '{ex}enemy', weight: 1},
@@ -196,6 +215,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'ex',
+        'version': 1.0,
         'data': [
             {'value': '', weight: 3},
             {'value': 'ex-', weight: 1}
@@ -203,6 +223,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'complication_injury',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             {'value': 'their {body_location} has {scars}', weight: 1},
@@ -212,6 +233,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'destroyed_term',
+        'version': 1.0,
         'data': [
             {'value': 'was destroyed', weight: 1},
             {'value': 'was cleanly severed', weight: 1},
@@ -224,6 +246,7 @@ export const table_data: Table[] = [
     },
     {
         'name': 'scars',
+        'version': 1.0,
         'data': [
             {'value': 'claw marks', weight: 1},
             {'value': 'a puncture scar', weight: 1},

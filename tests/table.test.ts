@@ -7,7 +7,7 @@ import { expect } from 'chai';
 class TestTable {
     @test('Test DeepCopyTable')
     testDeepCopyTable() {
-        let t: Table = { name: 'test table', substitutions: true, reference: { table: 'ref table', min: 1, max: 2 } };
+        let t: Table = { name: 'test table', 'version': 1.0, substitutions: true, reference: { table: 'ref table', min: 1, max: 2 } };
         let cp: Table = DeepCopyTable(t);
 
         cp.name = 'cp table';

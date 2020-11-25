@@ -68,12 +68,14 @@ var TableStore = (function (_super) {
     TableStore.prototype.calculateRowSubstitutions = function (table) {
         if (!table.substitutions || !table.data)
             return table;
-        var search = [];
+        var search;
         for (var idx in table.data) {
             var row = table.data[idx];
             row.substitutions = [];
             while ((search = SubstituteRe_Search.exec(row.value)) != null) {
-                row.substitutions.push(search.groups.name);
+                if (search.groups) {
+                    row.substitutions.push(search.groups.name);
+                }
             }
         }
         return table;

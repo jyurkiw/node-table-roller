@@ -6,6 +6,7 @@ import { expect } from 'chai';
 
 let sideTable: Table = {
     'name': 'side',
+    'version': 1.0,
     'data': [
         {'value': 'left', weight: 1},
         {'value': 'right', weight: 1}
@@ -13,6 +14,7 @@ let sideTable: Table = {
 };
 let exTable: Table = {
     'name': 'ex',
+    'version': 1.0,
     'data': [
         {'value': '', weight: 3},
         {'value': 'ex-', weight: 1}
@@ -20,6 +22,7 @@ let exTable: Table = {
 };
 let weightingTable: Table = {
     'name': 'weighting test table',
+    'version': 1.0,
     'data': [
         {'value': 'a', weight: 1},
         {'value': 'b', weight: 1},
@@ -29,6 +32,7 @@ let weightingTable: Table = {
 };
 let redirTableA: Table = {
     'name': 'redirectionA',
+    'version': 1.0,
     'reference': {
         'table': 'redirection_target',
         'min': 1,
@@ -37,6 +41,7 @@ let redirTableA: Table = {
 };
 let redirTableB: Table = {
     'name': 'redirectionB',
+    'version': 1.0,
     'reference': {
         'table': 'redirection_target',
         'min': 1,
@@ -45,6 +50,7 @@ let redirTableB: Table = {
 };
 let redirTableC: Table = {
     'name': 'redirectionC',
+    'version': 1.0,
     'reference': {
         'table': 'redirection_target',
         'min': 0,
@@ -53,6 +59,7 @@ let redirTableC: Table = {
 };
 let redirTableZ: Table = {
     'name': 'double redirection',
+    'version': 1.0,
     'reference': {
         'table': 'redirectionC',
         'min': 1,
@@ -61,6 +68,7 @@ let redirTableZ: Table = {
 }
 let redirTargetTable: Table = {
     'name': 'redirection_target',
+    'version': 1.0,
     'data': [
         { 'value': 'a', 'weight': 1, 'weightedIndex': 0.25 },
         { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
@@ -70,12 +78,14 @@ let redirTargetTable: Table = {
 };
 let redirExpected_1_1: Table = {
     'name': 'redirectionB',
+    'version': 1.0,
     'data': [
         { 'value': 'b', 'weight': 1, 'weightedIndex': 1 }
     ]
 };
 let redirExpected_1_2: Table = {
     'name': 'redirectionA',
+    'version': 1.0,
     'data': [
         { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
         { 'value': 'c', 'weight': 1, 'weightedIndex': 1 }
@@ -83,6 +93,7 @@ let redirExpected_1_2: Table = {
 };
 let redirExpected_0_3: Table = {
     'name': 'redirectionC',
+    'version': 1.0,
     'data': [
         { 'value': 'a', 'weight': 1, 'weightedIndex': 0.25 },
         { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
@@ -92,12 +103,13 @@ let redirExpected_0_3: Table = {
 };
 let redirExpected_double: Table = {
     'name': 'double redirection',
+    'version': 1.0,
     'data': [
         { 'value': 'b', 'weight': 1, 'weightedIndex': 0.5 },
         { 'value': 'c', 'weight': 1, 'weightedIndex': 1 }
     ]
 };
-let noDatTable: Table = { name: 'no data table' };
+let noDatTable: Table = { name: 'no data table', 'version': 1.0, };
 let td: Table[] = [sideTable, exTable];
 let subT
 
@@ -178,7 +190,8 @@ class TestTableStore {
     @test('Test calculateRowSubstitutions data flag guard')
     testCalculateRowSubstitutions_dataGuardFail() {
         let t: Table = {
-            'name': 'testtbl'
+            'name': 'testtbl',
+            'version': 1.0
         };
         expect(() => this.ts.calculateRowSubstitutions(t))
             .to.not.throw();
@@ -189,6 +202,7 @@ class TestTableStore {
     testCalculateRowSubstitutions_substitutionFlagGuard() {
         let t: Table = {
             'name': 'testtbl',
+            'version': 1.0,
             'data': [
                 { 'value': '{test}', 'weight': 1}
             ]
@@ -201,6 +215,7 @@ class TestTableStore {
     testCalculateRowSubstitutions_success() {
         let t: Table = {
             'name': 'substitution table',
+            'version': 1.0,
             'substitutions': true,
             'data': [
                 {'value': 'we {ship} this', weight: 1},

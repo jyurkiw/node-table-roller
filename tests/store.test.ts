@@ -6,6 +6,7 @@ import { expect } from 'chai';
 
 export class NamedNum implements NameMappable {
     name: string;
+    version: number = 1;
     constructor(n: string) { this.name = n; }
 }
 

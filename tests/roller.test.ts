@@ -13,6 +13,7 @@ let bRow: TableRow = { value: 'a', weight: 1, weightedIndex: 0.75 };
 
 let tA: Table = {
     'name': 'a',
+    'version': 1.0,
     'data': [
         {'value': 'a', weight: 1},
         {'value': 'b', weight: 1},
@@ -22,6 +23,7 @@ let tA: Table = {
 };
 let tB: Table = {
     'name': 'b',
+    'version': 1.0,
     'data': [
         {'value': 'a', weight: 1},
         {'value': 'b', weight: 1},
@@ -29,8 +31,8 @@ let tB: Table = {
         {'value': 'd', weight: 1}
     ]
 };
-let rpA: RollPlan = {'name': 'roll plan a', 'rolls': []};
-let rpB: RollPlan = {'name': 'roll plan b', 'rolls': []};
+let rpA: RollPlan = {'name': 'roll plan a', 'version': 1.0, 'rolls': []};
+let rpB: RollPlan = {'name': 'roll plan b', 'version': 1.0, 'rolls': []};
 
 @suite
 class TestRoller {

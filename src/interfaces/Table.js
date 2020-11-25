@@ -5,7 +5,7 @@ var TableRow_1 = require("./TableRow");
 var TableReference_1 = require("./TableReference");
 var Linq = require("linq");
 function DeepCopyTable(table) {
-    var t = { name: table.name };
+    var t = { name: table.name, version: table.version };
     if (table.data) {
         t.data = Linq
             .from(table.data)

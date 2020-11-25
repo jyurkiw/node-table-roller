@@ -108,7 +108,7 @@ export class TableStore extends Store<Table> {
     calculateRowSubstitutions(table: Table): Table {
         if (!table.substitutions || !table.data) return table;
 
-        let search:RegExpExecArray;
+        let search: RegExpExecArray;
         for (let idx in table.data) {
             let row = table.data[idx] as TableRow;
             row.substitutions = [];

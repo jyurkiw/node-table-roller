@@ -21,6 +21,7 @@ class TestRollerWeightedTableRoll {
         this.roller = new Roller();
         let t: Table = {
             name: 'test table',
+            version: 1.0,
             data: Linq
                 .range(0, 4)
                 .select(

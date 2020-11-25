@@ -4,60 +4,70 @@ exports.table_data = exports.roll_plans = void 0;
 exports.roll_plans = [
     {
         'name': 'hit_location',
+        'version': 1.0,
         'rolls': [
             { 'table': 'body_location', 'numRolls': 1 }
         ]
     },
     {
         'name': 'side',
+        'version': 1.0,
         'rolls': [
             { 'table': 'side', 'numRolls': 1 }
         ]
     },
     {
         'name': 'relation',
+        'version': 1.0,
         'rolls': [
             { 'table': 'relation', 'numRolls': 1 }
         ]
     },
     {
         'name': 'friends, enemies, and lovers',
+        'version': 1.0,
         'rolls': [
             { 'table': 'friends, enemies, and lovers', 'numRolls': 1 }
         ]
     },
     {
         'name': 'siblings and cousins',
+        'version': 1.0,
         'rolls': [
             { 'table': 'siblings and cousins', 'numRolls': 1 }
         ]
     },
     {
         'name': 'children',
+        'version': 1.0,
         'rolls': [
             { 'table': 'children', 'numRolls': 1 }
         ]
     },
     {
         'name': 'inheritors',
+        'version': 1.0,
         'rolls': [
             { 'table': 'inheritors', 'numRolls': 1 }
         ]
     },
     {
         'name': 'parents',
+        'version': 1.0,
         'rolls': [
             { 'table': 'parents', 'numRolls': 1 }
         ]
     },
     {
         'name': 'grandparents',
+        'version': 1.0,
         'rolls': [
             { 'table': 'grandparents', 'numRolls': 1 }
         ]
     },
     {
         'name': 'complication_injury',
+        'version': 1.0,
         'rolls': [
             { 'table': 'complication_injury', 'numRolls': 1 }
         ]
@@ -66,6 +76,7 @@ exports.roll_plans = [
 exports.table_data = [
     {
         'name': 'body_location',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             { 'value': 'skull', 'weight': 1 },
@@ -97,6 +108,7 @@ exports.table_data = [
     },
     {
         'name': 'side',
+        'version': 1.0,
         'data': [
             { 'value': 'left', weight: 1 },
             { 'value': 'right', weight: 1 }
@@ -104,6 +116,7 @@ exports.table_data = [
     },
     {
         'name': 'friends, enemies, and lovers',
+        'version': 1.0,
         'substitutions': true,
         'reference': {
             'table': 'relation',
@@ -113,6 +126,7 @@ exports.table_data = [
     },
     {
         'name': 'siblings and cousins',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 16,
@@ -121,6 +135,7 @@ exports.table_data = [
     },
     {
         'name': 'inheritors',
+        'version': 1.0,
         'substitutions': true,
         'reference': {
             'table': 'relation',
@@ -130,6 +145,7 @@ exports.table_data = [
     },
     {
         'name': 'children',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 19,
@@ -138,6 +154,7 @@ exports.table_data = [
     },
     {
         'name': 'parents',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 25,
@@ -146,6 +163,7 @@ exports.table_data = [
     },
     {
         'name': 'grandparents',
+        'version': 1.0,
         'reference': {
             'table': 'relation',
             'min': 29,
@@ -154,6 +172,7 @@ exports.table_data = [
     },
     {
         'name': 'relation',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             { 'value': '{ex}enemy', weight: 1 },
@@ -195,6 +214,7 @@ exports.table_data = [
     },
     {
         'name': 'ex',
+        'version': 1.0,
         'data': [
             { 'value': '', weight: 3 },
             { 'value': 'ex-', weight: 1 }
@@ -202,6 +222,7 @@ exports.table_data = [
     },
     {
         'name': 'complication_injury',
+        'version': 1.0,
         'substitutions': true,
         'data': [
             { 'value': 'their {body_location} has {scars}', weight: 1 },
@@ -211,6 +232,7 @@ exports.table_data = [
     },
     {
         'name': 'destroyed_term',
+        'version': 1.0,
         'data': [
             { 'value': 'was destroyed', weight: 1 },
             { 'value': 'was cleanly severed', weight: 1 },
@@ -223,6 +245,7 @@ exports.table_data = [
     },
     {
         'name': 'scars',
+        'version': 1.0,
         'data': [
             { 'value': 'claw marks', weight: 1 },
             { 'value': 'a puncture scar', weight: 1 },
