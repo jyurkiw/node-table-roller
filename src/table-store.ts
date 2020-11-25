@@ -113,7 +113,9 @@ export class TableStore extends Store<Table> {
             let row = table.data[idx] as TableRow;
             row.substitutions = [];
             while((search = SubstituteRe_Search.exec(row.value)) != null) {
-                row.substitutions.push(search.groups.name);
+                if (search.groups) {
+                    row.substitutions.push(search.groups.name);
+                }
             }
         }
         return table;
