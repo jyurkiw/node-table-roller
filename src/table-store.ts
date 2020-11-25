@@ -5,7 +5,7 @@ import { Store } from './store'
 
 import * as Linq from 'linq';
 
-const SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/y);
+export const SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/g);
 
 export class TableStore extends Store<Table> {
     constructor() { super(); }

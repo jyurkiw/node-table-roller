@@ -8,7 +8,6 @@ import { RollPlan } from './interfaces/RollPlan';
 
 import * as Linq from 'linq';
 
-const SubstituteRe_Search = RegExp(/[\w\s]*\{(?<name>\w*)\}/y);
 const SubstituteRe = RegExp(/\{(?<name>\w*)\}/);
 
 export interface RollerSize { tables: number, plans: number };
