@@ -5,7 +5,8 @@
       "removeComments": true,
       "preserveConstEnums": true,
       "sourceMap": true,
-      "experimentalDecorators": true
+      "experimentalDecorators": true,
+      "outDir": "output/"
     },
     "include": ["src/**/*", "src/interfaces/**/*", "test_data/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts"],
