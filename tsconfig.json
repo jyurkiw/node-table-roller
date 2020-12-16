@@ -9,6 +9,5 @@
       "outDir": "output/"
     },
     "include": ["src/**/*", "src/interfaces/**/*", "test_data/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts"],
-
+    "exclude": ["node_modules", "**/*.spec.ts"]
 }

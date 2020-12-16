@@ -2,7 +2,7 @@
   "name": "table-roller",
   "version": "1.0.0",
   "description": "A robust table-roller.",
-  "main": "index.js",
+  "main": "output/src/index.js",
   "scripts": {
     "test": "tsc; mocha -r ts-node/register tests/**/*.test.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test; nyc report"
