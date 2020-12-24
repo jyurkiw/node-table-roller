@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/jyurkiw/node-table-roller#readme",
   "dependencies": {
-    "linq": "^3.2.3"
+    "linq": "^3.2.3",
+    "table-roller-js": "github:jyurkiw/tableRollerJS"
   },
   "devDependencies": {
     "@testdeck/mocha": "^0.1.2",

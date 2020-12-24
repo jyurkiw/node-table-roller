@@ -79,13 +79,21 @@ export class Roller {
      * Execute a roll plan.
      * @param planName Name of the plan to execute.
      * @param rolls Rolls passed to the roll plan.
+     * @param substitutions Substitutions for roll plan steps.
      */
-    roll(planName: string, rolls?: number[]): string[] {
+    roll(planName: string, rolls?: number[], substitutions?: {[index:string] : string}): string[] {
         let plan: RollPlan = this.rollPlans.get(planName);
         let results: string[] = [];
 
         for (let planStep of plan.rolls) {
             let tableName: string = planStep.table;
+
+            // Check for and process substitutions
+            if (substitutions && substitutions[tableName]) {
+                results.push(substitutions[tableName]);
+                continue;
+            }
+
             let numRolls = this.getRollNum(planStep);
             for (let i = 0; i < numRolls; i++) {
                 let resultRow: TableRow = this.weightedTableRoll(
